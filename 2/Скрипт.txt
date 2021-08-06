@@ -1,0 +1,150 @@
+function my_fc() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const UrlDomain = 'https://pikabu.ru/';
+  p = 0
+  count = 0
+
+
+  let url = UrlDomain;
+  let response = UrlFetchApp.fetch(url);
+  //ss.getRange('B3').setValue(response.getResponseCode());
+  let html = response.getContentText();
+  while (true) {
+    let out = getBlock(html, 'div', html.indexOf('class="story-image__content image-lazy"',p));
+    let block = out[0]
+    p = out[1] + 1;
+
+    if (p==0) break;
+
+    let discr_l = getOpenTag(block, 'a',  0)
+    let discr = getAttrName(discr_l,'href',0).slice(24)
+    rC = ss.getRange('C2:C1000')
+    
+    rC.getCell(count+1,1).setValue(discr)
+
+    let block_2 = getOpenTag(block, 'img',  block.indexOf('data-src'));
+    rA_2 = ss.getRange('A2:A1000')
+    
+    rA_2.getCell(count+1,1).setValue(count+1)
+
+
+
+    let link = getAttrName(block_2,'data-src',0)
+  
+
+    let date = link.slice(32, 42)
+    rB_2 = ss.getRange('B2:B1000')
+    
+    rB_2.getCell(count+1,1).setValue(date)
+
+    rD_2 = ss.getRange('D2:D1000')
+    
+    rD_2.getCell(count+1,1).setValue('=IMAGE("'+link+'")')
+    count++;
+  }
+}
+
+
+
+function getAttrName(html, attr, i) {
+  let idxStart = html.indexOf(attr +'=' , i);
+  if (idxStart == -1) return "Can't to find attr " + attr + ' !';
+  idxStart = html.indexOf('"' , idxStart) + 1;
+  let idxEnd = html.indexOf('"' , idxStart);
+  return html.slice(idxStart,idxEnd).trim();
+}
+
+function getOpenTag(html, tag, idxStart) {
+  let openTag = '<' + tag;
+  let lenOpenTag = openTag.length;
+  // where we are?
+  if (html.slice(idxStart, idxStart + lenOpenTag) != openTag) {
+    idxStart = html.lastIndexOf(openTag, idxStart);
+    if (idxStart == -1) return "Can't to find openTag " + openTag + ' !';
+  };
+  // begin loop after openTag
+  let idxEnd = html.indexOf('>', idxStart) + 1;
+  if (idxStart == -1) return "Can't to find closing bracket '>' for openTag!";
+  return html.slice(idxStart,idxEnd).trim();
+}
+
+function deleteBlock(html, tag, idxStart) { // delete opening & closing tag and info between them
+  let openTag = '<' + tag;
+  let lenOpenTag = openTag.length;
+  let closeTag = '</' + tag + '>';
+  let lenCloseTag = closeTag.length;
+  let countCloseTags = 0;
+  let iMax = html.length;
+  let idxEnd = 0;
+  // where we are?
+  if (html.slice(idxStart, idxStart + lenOpenTag) != openTag) {
+    idxStart = html.lastIndexOf(openTag, idxStart);
+    if (idxStart == -1) return ["Can't to find openTag " + openTag + ' !', -1];
+  };
+  // begin loop after openTag
+  let i = html.indexOf('>') + 1;
+  
+  while (i <= iMax) {
+    i++;
+    if (i === iMax) {
+      return ['Could not find closing tag for ' + tag, -1];
+    };
+    let carrentValue = html[i];
+    if (html[i] === '<'){
+      let closingTag = html.slice(i, i + lenCloseTag);
+      let openingTag = html.slice(i, i + lenOpenTag);
+      if (html.slice(i, i + lenCloseTag) === closeTag) {
+        if (countCloseTags === 0) {
+          idxEnd = i + lenCloseTag;
+          break;
+        } else {
+          countCloseTags -= 1;
+        };
+      } else if (html.slice(i, i + lenOpenTag) === openTag) {
+        countCloseTags += 1;
+      };
+    };
+  };
+  return (html.slice(0, idxStart) + html.slice(idxEnd, iMax)).trim();
+}
+
+function getBlock(html, tag, idxStart) {  // <tag .... > Block </tag>
+  let openTag = '<' + tag;
+  let lenOpenTag = openTag.length;
+  let closeTag = '</' + tag + '>';
+  let lenCloseTag = closeTag.length;
+  let countCloseTags = 0;
+  let iMax = html.length;
+  let idxEnd = 0;
+  // where we are?
+  if (html.slice(idxStart, idxStart + lenOpenTag) != openTag) {
+    idxStart = html.lastIndexOf(openTag, idxStart);
+    if (idxStart == -1) return ["Can't to find openTag " + openTag + ' !', -1];
+  };
+  // change start - will start after openTag!
+  idxStart = html.indexOf('>', idxStart) + 1;
+  let i = idxStart;
+  
+  while (i <= iMax) {
+    i++;
+    if (i === iMax) {
+      return ['Could not find closing tag for ' + tag, -1];
+    };
+    let carrentValue = html[i];
+    if (html[i] === '<'){
+      let closingTag = html.slice(i, i + lenCloseTag);
+      let openingTag = html.slice(i, i + lenOpenTag);
+      if (html.slice(i, i + lenCloseTag) === closeTag) {
+        if (countCloseTags === 0) {
+          idxEnd = i - 1;
+          break;
+        } else {
+          countCloseTags -= 1;
+        };
+      } else if (html.slice(i, i + lenOpenTag) === openTag) {
+        countCloseTags += 1;
+      };
+    };
+  };
+  return [html.slice(idxStart,idxEnd + 1).trim(), idxEnd];
+}
