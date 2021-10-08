@@ -1,5 +1,9 @@
-У меня появились проблемы с авторизацией токена для API VK, по этой причине я решил выбрать сайт pikabu.ru для парсинга изображений (к тому же, структура очень схожа). Поэтому в текстовом файле script.txt лежит код, написанный в google apps script с реализацией поставленной задачи.
+РЎСЃС‹Р»РєР° РЅР° Р·Р°РґР°РЅРёРµ: 
 
-Результаты работы парсера: https://docs.google.com/spreadsheets/d/1Ab4OZz2ablNqO-YuCQdE5pBNsPsctT6uu7Y22xoGnco/edit?usp=sharing
+https://docs.google.com/document/d/142CMJ7K69rGoe7zbkivKME-uX9x5VXg7/edit?usp=sharing&ouid=103136878181406170150&rtpof=true&sd=true
 
-Идентификатор скрипта: 1W0gx85X4J1PJG45Uh6m9xdKszHAb9zAYlL49Quk9leBkx4190ChMV4AI
+РЈ РјРµРЅСЏ РїРѕСЏРІРёР»РёСЃСЊ РїСЂРѕР±Р»РµРјС‹ СЃ Р°РІС‚РѕСЂРёР·Р°С†РёРµР№ С‚РѕРєРµРЅР° РґР»СЏ API VK, РїРѕ СЌС‚РѕР№ РїСЂРёС‡РёРЅРµ СЏ СЂРµС€РёР» РІС‹Р±СЂР°С‚СЊ СЃР°Р№С‚ pikabu.ru РґР»СЏ РїР°СЂСЃРёРЅРіР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ (Рє С‚РѕРјСѓ Р¶Рµ, СЃС‚СЂСѓРєС‚СѓСЂР° РѕС‡РµРЅСЊ СЃС…РѕР¶Р°). РџРѕСЌС‚РѕРјСѓ РІ С‚РµРєСЃС‚РѕРІРѕРј С„Р°Р№Р»Рµ script.txt Р»РµР¶РёС‚ РєРѕРґ, РЅР°РїРёСЃР°РЅРЅС‹Р№ РІ google apps script СЃ СЂРµР°Р»РёР·Р°С†РёРµР№ РїРѕСЃС‚Р°РІР»РµРЅРЅРѕР№ Р·Р°РґР°С‡Рё.
+
+Р РµР·СѓР»СЊС‚Р°С‚С‹ СЂР°Р±РѕС‚С‹ РїР°СЂСЃРµСЂР°: https://docs.google.com/spreadsheets/d/1Ab4OZz2ablNqO-YuCQdE5pBNsPsctT6uu7Y22xoGnco/edit?usp=sharing
+
+РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃРєСЂРёРїС‚Р°: 1W0gx85X4J1PJG45Uh6m9xdKszHAb9zAYlL49Quk9leBkx4190ChMV4AI
